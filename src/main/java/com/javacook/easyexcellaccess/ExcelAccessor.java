@@ -29,13 +29,18 @@ public class ExcelAccessor implements ExcelEasyAccess {
 
     public boolean isEmpty(int sheetNo, int x, int y) {
         HSSFSheet sheet = workbook.getSheetAt(sheetNo);
-        return sheet.getRow(y).getCell(x) == null;
+        if (sheet == null) return true;
+        HSSFRow row = sheet.getRow(y);
+        if (row == null) return true;
+        HSSFCell cell = row.getCell(x);
+        if (cell == null) return true;
+        return cell.getCellType() == Cell.CELL_TYPE_BLANK;
     }
 
+
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
-        HSSFSheet sheet = workbook.getSheetAt(sheetNo);
-        HSSFRow row = sheet.getRow(y);
-        HSSFCell cell = row.getCell(x);
+        if (isEmpty(sheetNo, x, y)) return null;
+        HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
         if (cell == null) return null;
         switch (cell.getCellType()) {
             case Cell.CELL_TYPE_STRING:
