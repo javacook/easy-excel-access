@@ -73,4 +73,23 @@ public class ExcelAccessor implements ExcelEasyAccess {
         }
     }
 
+    @Override
+    public int noRows(int sheetNo) {
+        return workbook.getSheetAt(sheetNo).getLastRowNum() + 1;
+    }
+
+    @Override
+    public int noCols(int sheetNo) {
+        int maxLastCellNum = 0;
+        HSSFSheet sheet = workbook.getSheetAt(sheetNo);
+        for (int i = 0; i < noRows(sheetNo); i++) {
+            HSSFRow row = sheet.getRow(i);
+            if (row != null) {
+                short lastCellNum = sheet.getRow(i).getLastCellNum();
+                if (lastCellNum > maxLastCellNum) maxLastCellNum = lastCellNum;
+            }
+        }
+        return maxLastCellNum;
+    }
+
 }

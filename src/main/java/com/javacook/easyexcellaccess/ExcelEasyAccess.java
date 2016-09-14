@@ -7,4 +7,7 @@ public interface ExcelEasyAccess {
 
     <T> T readCell(int sheet, int x, int y, Class<T> clazz);
 
+    int noRows(int sheet);
+
+    int noCols(int sheet);
 }
