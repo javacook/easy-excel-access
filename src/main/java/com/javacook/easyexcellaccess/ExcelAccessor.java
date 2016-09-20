@@ -37,6 +37,9 @@ public class ExcelAccessor implements ExcelEasyAccess {
         return cell.getCellType() == Cell.CELL_TYPE_BLANK;
     }
 
+    public boolean isOutside(int sheetNo, int x, int y) {
+        return x > noCols(sheetNo) || y > noRows(sheetNo);
+    }
 
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
         if (isEmpty(sheetNo, x, y)) return null;
