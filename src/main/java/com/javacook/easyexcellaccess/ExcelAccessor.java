@@ -43,36 +43,40 @@ public class ExcelAccessor implements ExcelEasyAccess {
 
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
         if (isEmpty(sheetNo, x, y)) return null;
-        HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
-        if (cell == null) return null;
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_STRING:
-                String str = cell.getStringCellValue();
-                if (clazz == String.class) return (T) str;
-                if (clazz == Integer.class) return (T) new Integer(str);
-                if (clazz == Long.class) return (T) new Long(str);
-                if (clazz == Boolean.class) return (T) new Boolean(str);
-                throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-            case Cell.CELL_TYPE_NUMERIC:
-                double dbl = cell.getNumericCellValue();
-                if (clazz == String.class) return (T) String.valueOf(dbl);
-                if (clazz == Integer.class) return (T) new Integer((int) dbl);
-                if (clazz == Long.class) return (T) new Long((long) dbl);
-                throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-            case Cell.CELL_TYPE_BOOLEAN:
-                boolean bool = cell.getBooleanCellValue();
-                if (clazz == String.class) return (T) String.valueOf(bool);
-                if (clazz == Integer.class) return (T) (bool ? Integer.valueOf(1) : Integer.valueOf(0));
-                if (clazz == Long.class) return (T) (bool ? Long.valueOf(1) : Long.valueOf(0));
-                throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-            case Cell.CELL_TYPE_BLANK:
-                return null;
-            case Cell.CELL_TYPE_ERROR:
-                throw new IllegalArgumentException("Cell is of type error.");
-            case Cell.CELL_TYPE_FORMULA:
-                throw new IllegalArgumentException("Cell is of type formular.");
-            default:
-                throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
+        try {
+            HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
+            if (cell == null) return null;
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_STRING:
+                    String str = cell.getStringCellValue();
+                    if (clazz == String.class) return (T) str;
+                    if (clazz == Integer.class) return (T) new Integer(str);
+                    if (clazz == Long.class) return (T) new Long(str);
+                    if (clazz == Boolean.class) return (T) new Boolean(str);
+                    throw new IllegalArgumentException("Invalid class '" + clazz + "'");
+                case Cell.CELL_TYPE_NUMERIC:
+                    double dbl = cell.getNumericCellValue();
+                    if (clazz == String.class) return (T) String.valueOf(dbl);
+                    if (clazz == Integer.class) return (T) new Integer((int) dbl);
+                    if (clazz == Long.class) return (T) new Long((long) dbl);
+                    throw new IllegalArgumentException("Invalid class '" + clazz + "'");
+                case Cell.CELL_TYPE_BOOLEAN:
+                    boolean bool = cell.getBooleanCellValue();
+                    if (clazz == String.class) return (T) String.valueOf(bool);
+                    if (clazz == Integer.class) return (T) (bool ? Integer.valueOf(1) : Integer.valueOf(0));
+                    if (clazz == Long.class) return (T) (bool ? Long.valueOf(1) : Long.valueOf(0));
+                    throw new IllegalArgumentException("Invalid class '" + clazz + "'");
+                case Cell.CELL_TYPE_BLANK:
+                    return null;
+                case Cell.CELL_TYPE_ERROR:
+                    throw new IllegalArgumentException("Cell is of type error.");
+                case Cell.CELL_TYPE_FORMULA:
+                    throw new IllegalArgumentException("Cell is of type formular.");
+                default:
+                    throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Access to cell (sheet="+sheetNo+", x="+x+", y="+y+") failed", e);
         }
     }
 
