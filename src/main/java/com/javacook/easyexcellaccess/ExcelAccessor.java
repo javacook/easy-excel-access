@@ -15,6 +15,7 @@ import java.util.Objects;
 public class ExcelAccessor implements ExcelEasyAccess {
 
     final HSSFWorkbook workbook;
+    public static double EPSILON = 1E-10;
 
     public ExcelAccessor(String resourceName) throws IOException {
         InputStream is = Objects.requireNonNull(getClass().getResourceAsStream(resourceName),
@@ -50,7 +51,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
                 case Cell.CELL_TYPE_STRING:
                     return cell.getStringCellValue();
                 case Cell.CELL_TYPE_NUMERIC:
-                    return cell.getNumericCellValue();
+                    return convertNumericToObject(cell.getNumericCellValue());
                 case Cell.CELL_TYPE_BOOLEAN:
                     return cell.getBooleanCellValue();
                 case Cell.CELL_TYPE_BLANK:
@@ -66,6 +67,21 @@ public class ExcelAccessor implements ExcelEasyAccess {
             throw new RuntimeException("Access to cell (sheet="+sheetNo+", x="+x+", y="+y+") failed", e);
         }
     }
+
+
+    private Object convertNumericToObject(double  cellValue) {
+        long cellValueRounded = Math.round(cellValue);
+        if (Math.abs(cellValue - (double)cellValueRounded) < EPSILON) {
+            if (Integer.MIN_VALUE <= cellValueRounded && cellValue <= Integer.MAX_VALUE) {
+                return (int)cellValueRounded;
+            }
+            else {
+                return cellValueRounded;
+            }
+        }
+        else return cellValue;
+    }
+
 
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
         if (isEmpty(sheetNo, x, y)) return null;
