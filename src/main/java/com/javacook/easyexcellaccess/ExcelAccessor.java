@@ -41,6 +41,32 @@ public class ExcelAccessor implements ExcelEasyAccess {
         return x > noCols(sheetNo) || y > noRows(sheetNo);
     }
 
+    public Object readCell(int sheetNo, int x, int y) {
+        if (isEmpty(sheetNo, x, y)) return null;
+        try {
+            HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
+            if (cell == null) return null;
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_STRING:
+                    return cell.getStringCellValue();
+                case Cell.CELL_TYPE_NUMERIC:
+                    return cell.getNumericCellValue();
+                case Cell.CELL_TYPE_BOOLEAN:
+                    return cell.getBooleanCellValue();
+                case Cell.CELL_TYPE_BLANK:
+                    return null;
+                case Cell.CELL_TYPE_ERROR:
+                    throw new IllegalArgumentException("Cell is of type error.");
+                case Cell.CELL_TYPE_FORMULA:
+                    throw new IllegalArgumentException("Cell is of type formular.");
+                default:
+                    throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Access to cell (sheet="+sheetNo+", x="+x+", y="+y+") failed", e);
+        }
+    }
+
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
         if (isEmpty(sheetNo, x, y)) return null;
         try {
