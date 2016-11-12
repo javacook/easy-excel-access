@@ -18,8 +18,10 @@ public class ExcelAccessor implements ExcelEasyAccess {
     public static double EPSILON = 1E-10;
 
     public ExcelAccessor(String resourceName) throws IOException {
-        InputStream is = Objects.requireNonNull(getClass().getResourceAsStream(resourceName),
-                "Resource '" + resourceName + " does not exist.");
+        final InputStream is = getClass().getResourceAsStream(resourceName);
+        if (is == null) {
+            throw new IllegalArgumentException("Resource '" + resourceName + " does not exist.");
+        }
         workbook = new HSSFWorkbook(is);
     }
 
