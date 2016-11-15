@@ -18,7 +18,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
     public static double EPSILON = 1E-10;
 
     public ExcelAccessor(String resourceName) throws IOException {
-        final InputStream is = getClass().getResourceAsStream(resourceName);
+        final InputStream is = ClassLoader.getSystemResourceAsStream(resourceName);
         if (is == null) {
             throw new IllegalArgumentException("Resource '" + resourceName + " does not exist.");
         }
