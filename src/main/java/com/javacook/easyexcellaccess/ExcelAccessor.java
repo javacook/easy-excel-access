@@ -18,16 +18,18 @@ public class ExcelAccessor implements ExcelEasyAccess {
     public static double EPSILON = 1E-10;
 
     public ExcelAccessor(String resourceName) throws IOException {
-        final InputStream is = ClassLoader.getSystemResourceAsStream(resourceName);
-        if (is == null) {
-            throw new IllegalArgumentException("Resource '" + resourceName + " does not exist.");
+        try (InputStream is = ClassLoader.getSystemResourceAsStream(resourceName)) {
+            if (is == null) {
+                throw new IllegalArgumentException("Resource '" + resourceName + " does not exist.");
+            }
+            workbook = new HSSFWorkbook(is);
         }
-        workbook = new HSSFWorkbook(is);
     }
 
     public ExcelAccessor(File file) throws IOException {
-        FileInputStream fis = new FileInputStream(file);
-        workbook = new HSSFWorkbook(fis);
+        try (FileInputStream fis = new FileInputStream(file)) {
+            workbook = new HSSFWorkbook(fis);
+        }
     }
 
     public boolean isEmpty(int sheetNo, int x, int y) {
