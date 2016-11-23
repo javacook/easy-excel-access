@@ -11,11 +11,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * A collection of routines to access Excel content very easily.
+ */
 public class ExcelAccessor implements ExcelEasyAccess {
 
     final HSSFWorkbook workbook;
     public static double EPSILON = 1E-10;
 
+    /**
+     * Constructor to access the Ecxel file as class path resource
+     * @param resourceName name of the resource
+     * @throws IOException if the resource file does not exist or is not accessable
+     */
     public ExcelAccessor(String resourceName) throws IOException {
         try (InputStream is = ClassLoader.getSystemResourceAsStream(resourceName)) {
             if (is == null) {
@@ -31,6 +39,13 @@ public class ExcelAccessor implements ExcelEasyAccess {
         }
     }
 
+    /**
+     * Checks whether the excel cell is empty
+     * @param sheetNo Excel sheet number starting with 0
+     * @param x
+     * @param y
+     * @return
+     */
     public boolean isEmpty(int sheetNo, int x, int y) {
         HSSFSheet sheet = workbook.getSheetAt(sheetNo);
         if (sheet == null) return true;
