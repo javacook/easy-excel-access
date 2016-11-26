@@ -8,7 +8,33 @@
     <artifactId>easy-excel-access</artifactId>
     <version>0.1-SNAPSHOT</version>
 
+    <scm>
+        <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
+        <developerConnection>scm:git:git@github.com:javacook/easy-excel-access.git</developerConnection>
+        <url>https://github.com/javacook/easy-excel-access</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <email>javacook@gmx.de</email>
+            <name>Jörg Vollmer</name>
+            <url>https://github.com/javacook</url>
+            <id>javacook</id>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
     <dependencies>
+
+        <dependency>
+            <groupId>com.javacook</groupId>
+            <artifactId>coordinate-sequencer</artifactId>
+            <version>0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -37,5 +63,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>Artifactory</id>
+            <url>http://www.clean-coder.de:8080/artifactory/libs-release-local</url>
+        </repository>
+    </distributionManagement>
 
 </project>
