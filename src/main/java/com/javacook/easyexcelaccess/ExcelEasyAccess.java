@@ -1,4 +1,4 @@
-package com.javacook.easyexcellaccess;
+package com.javacook.easyexcelaccess;
 
 /**
  * Base routines to access Excel content.

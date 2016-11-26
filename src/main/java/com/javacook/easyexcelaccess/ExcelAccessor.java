@@ -1,4 +1,4 @@
-package com.javacook.easyexcellaccess;
+package com.javacook.easyexcelaccess;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;

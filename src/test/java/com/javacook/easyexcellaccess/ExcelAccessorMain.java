@@ -1,8 +1,8 @@
 package com.javacook.easyexcellaccess;
 
-import java.io.IOException;
+import com.javacook.easyexcelaccess.ExcelAccessor;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
 
 /**
  * Created by vollmer on 28.08.16.
