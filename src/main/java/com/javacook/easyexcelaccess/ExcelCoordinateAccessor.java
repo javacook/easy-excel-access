@@ -13,11 +13,11 @@ public class ExcelCoordinateAccessor extends ExcelAccessor {
     public final int defaultSheet;
 
     public ExcelCoordinateAccessor(String resourceName) throws IOException {
-        this(resourceName, 0);
+        this(resourceName, 1);
     }
 
     public ExcelCoordinateAccessor(File file) throws IOException {
-        this(file, 0);
+        this(file, 1);
     }
 
     /**
