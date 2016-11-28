@@ -6,7 +6,7 @@
 
     <groupId>com.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.javacook</groupId>
             <artifactId>coordinate-sequencer</artifactId>
-            <version>0.1</version>
+            <version>0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
