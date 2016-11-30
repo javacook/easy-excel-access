@@ -5,7 +5,6 @@ import com.javacook.easyexcelaccess.ExcelAccessor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by vollmer on 28.08.16.
@@ -22,7 +21,7 @@ public class ExcelAccessorMain {
         System.out.println(excelAccessor.noCols(0));
         final Date date = (Date)excelAccessor.readCell(0, 0, 2);
         final SimpleDateFormat isoFormat = new SimpleDateFormat(ExcelAccessor.DEFAULT_DATE_FORMAT);
-        isoFormat.setTimeZone(ExcelAccessor.DEFAULT_TIME_ZOME);
+        isoFormat.setTimeZone(ExcelAccessor.DEFAULT_TIME_ZONE);
         System.out.println(isoFormat.format(new Date()));
         System.out.println(isoFormat.format(date));
     }
