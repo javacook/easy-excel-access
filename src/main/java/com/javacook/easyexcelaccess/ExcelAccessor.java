@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * A collection of routines to access Excel content very easily.
@@ -18,6 +19,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
     final HSSFWorkbook workbook;
     public static double EPSILON = 1E-10;
     public static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX"; // X fuer ISO-8601
+    public static TimeZone DEFAULT_TIME_ZOME = TimeZone.getTimeZone("UTC");
 
     /**
      * Constructor to access the Ecxel file as class path resource
@@ -71,7 +73,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
                 case Cell.CELL_TYPE_NUMERIC:
                     final double numericCellValue = cell.getNumericCellValue();
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                        return HSSFDateUtil.getJavaDate(numericCellValue);
+                        return HSSFDateUtil.getJavaDate(numericCellValue, false, DEFAULT_TIME_ZOME);
                     }
                     return convertNumericToObject(numericCellValue);
                 case Cell.CELL_TYPE_BOOLEAN:
@@ -117,7 +119,11 @@ public class ExcelAccessor implements ExcelEasyAccess {
                     if (clazz == Integer.class) return (T) new Integer(str);
                     if (clazz == Long.class) return (T) new Long(str);
                     if (clazz == Boolean.class) return (T) new Boolean(str);
-                    if (clazz == Date.class) return (T) new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(str);
+                    if (clazz == Date.class) {
+                        final SimpleDateFormat isoFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+                        isoFormat.setTimeZone(DEFAULT_TIME_ZOME);
+                        return (T) isoFormat.parse(str);
+                    }
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
                 case Cell.CELL_TYPE_NUMERIC:
                     double dbl = cell.getNumericCellValue();
