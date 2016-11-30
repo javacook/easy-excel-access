@@ -21,8 +21,8 @@ public class ExcelAccessorMain {
         System.out.println(excelAccessor.noRows(0));
         System.out.println(excelAccessor.noCols(0));
         final Date date = (Date)excelAccessor.readCell(0, 0, 2);
-        final SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
-        isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        final SimpleDateFormat isoFormat = new SimpleDateFormat(ExcelAccessor.DEFAULT_DATE_FORMAT);
+        isoFormat.setTimeZone(ExcelAccessor.DEFAULT_TIME_ZOME);
         System.out.println(isoFormat.format(new Date()));
         System.out.println(isoFormat.format(date));
     }
