@@ -1,15 +1,14 @@
 package com.javacook.easyexcelaccess;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A collection of routines to access Excel content very easily.
@@ -18,6 +17,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
 
     final HSSFWorkbook workbook;
     public static double EPSILON = 1E-10;
+    public static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX"; // X fuer ISO-8601
 
     /**
      * Constructor to access the Ecxel file as class path resource
@@ -69,7 +69,11 @@ public class ExcelAccessor implements ExcelEasyAccess {
                 case Cell.CELL_TYPE_STRING:
                     return cell.getStringCellValue();
                 case Cell.CELL_TYPE_NUMERIC:
-                    return convertNumericToObject(cell.getNumericCellValue());
+                    final double numericCellValue = cell.getNumericCellValue();
+                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                        return HSSFDateUtil.getJavaDate(numericCellValue);
+                    }
+                    return convertNumericToObject(numericCellValue);
                 case Cell.CELL_TYPE_BOOLEAN:
                     return cell.getBooleanCellValue();
                 case Cell.CELL_TYPE_BLANK:
@@ -113,12 +117,14 @@ public class ExcelAccessor implements ExcelEasyAccess {
                     if (clazz == Integer.class) return (T) new Integer(str);
                     if (clazz == Long.class) return (T) new Long(str);
                     if (clazz == Boolean.class) return (T) new Boolean(str);
+                    if (clazz == Date.class) return (T) new SimpleDateFormat(DEFAULT_DATE_FORMAT).parse(str);
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
                 case Cell.CELL_TYPE_NUMERIC:
                     double dbl = cell.getNumericCellValue();
                     if (clazz == String.class) return (T) String.valueOf(dbl);
                     if (clazz == Integer.class) return (T) new Integer((int) dbl);
                     if (clazz == Long.class) return (T) new Long((long) dbl);
+                    if (clazz == Date.class) return (T) HSSFDateUtil.getJavaDate(dbl);
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
                 case Cell.CELL_TYPE_BOOLEAN:
                     boolean bool = cell.getBooleanCellValue();
