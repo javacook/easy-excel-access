@@ -3,6 +3,16 @@ package com.javacook.easyexcelaccess;
 import com.javacook.coordinate.CoordinateInterface;
 import com.javacook.coordinate.sequencer.*;
 
+/**
+ * A coordinate iterator which visits a series of Excel row or columns cells for example:
+ * <pre>
+ *     ExcelCoordinateAccessor excel = new ExcelCoordinateAccessor(file, sheet);
+ *     new ExcelCoordinateSequencer()
+ *         .forCol('C')
+ *         .fromRow(3).toRow(9)
+ *         .forEach(coord -> System.out.println(excel.read(coord)));
+ * </pre>
+ */
 public class ExcelCoordinateSequencer {
 
     protected static int COL_MAX = 65536;
