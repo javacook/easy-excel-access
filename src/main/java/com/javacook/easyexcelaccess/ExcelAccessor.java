@@ -16,11 +16,11 @@ import java.util.TimeZone;
  */
 public class ExcelAccessor implements ExcelEasyAccess {
 
+    public final static double EPSILON = 1E-10;
+    public final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX"; // X fuer ISO-8601
+    public final static TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("UTC");
     final HSSFWorkbook workbook;
-    public static double EPSILON = 1E-10;
-    public static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX"; // X fuer ISO-8601
-    public static TimeZone DEFAULT_TIME_ZONE = TimeZone.getTimeZone("UTC");
-
+    
     /**
      * Constructor to access the Ecxel file as class path resource
      * @param resourceName name of the resource
