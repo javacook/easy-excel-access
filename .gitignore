@@ -3,7 +3,9 @@ target
 Servers
 .idea
 .settings
-**/.classpath
+.DS_Store
+.project
+.classpath
 .metadata
 .recommenders
 *.jar
