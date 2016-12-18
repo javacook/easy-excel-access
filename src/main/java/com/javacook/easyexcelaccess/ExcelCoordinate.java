@@ -9,6 +9,9 @@ import com.javacook.coordinate.CoordinateInterface;
  */
 public class ExcelCoordinate implements CoordinateInterface {
 
+    public static final int COL_MAX = 65536;
+    public static final int ROW_MAX = 65536;
+
     protected CoordinateInterface c;
 
     /**

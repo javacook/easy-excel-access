@@ -3,6 +3,9 @@ package com.javacook.easyexcelaccess;
 import com.javacook.coordinate.CoordinateInterface;
 import com.javacook.coordinate.sequencer.*;
 
+import static com.javacook.easyexcelaccess.ExcelCoordinate.COL_MAX;
+import static com.javacook.easyexcelaccess.ExcelCoordinate.ROW_MAX;
+
 /**
  * A coordinate iterator which visits a series of Excel row or columns cells for example:
  * <pre>
@@ -14,9 +17,6 @@ import com.javacook.coordinate.sequencer.*;
  * </pre>
  */
 public class ExcelCoordinateSequencer {
-
-    protected static int COL_MAX = 65536;
-    protected static int ROW_MAX = 65536;
 
     // Deligate
     final protected CoordinateSequencer<ExcelCoordinate> cs;
