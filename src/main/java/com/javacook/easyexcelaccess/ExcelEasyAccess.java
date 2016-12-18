@@ -4,7 +4,7 @@ package com.javacook.easyexcelaccess;
  * Base routines to access Excel content.
  */
 public interface ExcelEasyAccess {
-	
+
     /**
      * Reads the content of the cell at the coordintes <code>x</code> and <code>y</code>
      * from the sheet with no <code>sheet</code>. The type of the Excel cell content is 
@@ -43,4 +43,12 @@ public interface ExcelEasyAccess {
      * @return Column size of bounding box containing real data
      */
     int noCols(int sheet);
+
+    /**
+     * Yields the name of the sheet with index <code>sheet</code>
+     * @param sheet index of the sheet.
+     * @return
+     */
+    String sheetName(int sheet);
+
 }
