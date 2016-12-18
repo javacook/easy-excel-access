@@ -37,6 +37,19 @@ public class ExcelCoordinateSequencer {
         return this;
     }
 
+    public ExcelCoordinateSequencer from(int col, int row) {
+        return fromCol(col).fromRow(row);
+    }
+
+    public ExcelCoordinateSequencer from(ExcelCoordinate coord) {
+        return from(coord.col(), coord.row());
+    }
+
+    public ExcelCoordinateSequencer from(CoordinateInterface coord) {
+        cs.from(coord);
+        return this;
+    }
+
     private ExcelCoordinateSequencer toX(int xTo) {
         cs.toX(xTo);
         return this;
@@ -47,10 +60,19 @@ public class ExcelCoordinateSequencer {
         return this;
     }
 
-    private ExcelCoordinateSequencer to(CoordinateInterface c) {
+    public ExcelCoordinateSequencer to(ExcelCoordinate coord) {
+        return to(coord.col(), coord.row());
+    }
+
+    public ExcelCoordinateSequencer to(CoordinateInterface c) {
         cs.to(c);
         return this;
     }
+
+    public ExcelCoordinateSequencer to(int col, int row) {
+        return toCol(col).toRow(row);
+    }
+
 
     private ExcelCoordinateSequencer forX(int x) {
         cs.forX(x);
@@ -232,18 +254,6 @@ public class ExcelCoordinateSequencer {
 
     public ExcelCoordinateSequencer forCol(String col) {
         return forCol(ExcelUtil.calculateColNo(col));
-    }
-
-    public ExcelCoordinateSequencer from(int col, int row) {
-        return fromCol(col).fromRow(row);
-    }
-
-    public ExcelCoordinateSequencer from(ExcelCoordinate coord) {
-        return from(coord.col(), coord.row());
-    }
-
-    public ExcelCoordinateSequencer to(int col, int row) {
-        return toCol(col).toRow(row);
     }
 
     public ExcelCoordinateSequencer horStep(int stepX) {
