@@ -171,4 +171,10 @@ public class ExcelAccessor implements ExcelEasyAccess {
         return maxLastCellNum;
     }
 
+    @Override
+    public String sheetName(int sheetNo) {
+        HSSFSheet sheet = workbook.getSheetAt(sheetNo);
+        return sheet.getSheetName();
+    }
+
 }
