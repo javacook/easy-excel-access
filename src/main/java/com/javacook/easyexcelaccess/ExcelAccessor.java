@@ -1,5 +1,6 @@
 package com.javacook.easyexcelaccess;
 
+import com.javacook.coordinate.CoordinateInterface;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
 
@@ -92,6 +93,9 @@ public class ExcelAccessor implements ExcelEasyAccess {
         }
     }
 
+    public Object readCell(int sheet, CoordinateInterface coord) {
+        return readCell(sheet, coord.x(), coord.y());
+    }
 
     private Object convertNumericToObject(double  cellValue) {
         long cellValueRounded = Math.round(cellValue);
@@ -150,6 +154,10 @@ public class ExcelAccessor implements ExcelEasyAccess {
         } catch (Exception e) {
             throw new RuntimeException("Access to cell (sheet="+sheetNo+", x="+x+", y="+y+") failed", e);
         }
+    }
+
+    public <T> T readCell(int sheet, CoordinateInterface coord, Class<T> clazz) {
+        return readCell(sheet, coord.x(), coord.y(), clazz);
     }
 
     @Override
