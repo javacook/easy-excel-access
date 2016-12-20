@@ -59,6 +59,13 @@ public class ExcelAccessor implements ExcelEasyAccess {
         return cell.getCellType() == Cell.CELL_TYPE_BLANK;
     }
 
+    public boolean isRowEmpty(int sheetNo, int row) {
+        for (int col = 0; col < noCols(sheetNo); col++) {
+            if (!isEmpty(sheetNo, col, row)) return false;
+        }
+        return true;
+    }
+
     public boolean isOutside(int sheetNo, int x, int y) {
         return x > noCols(sheetNo) || y > noRows(sheetNo);
     }
