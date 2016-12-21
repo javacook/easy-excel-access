@@ -6,7 +6,7 @@
 
     <groupId>com.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
 
     <scm>
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
