@@ -13,32 +13,32 @@ public class ExcelCoordinateAccessor extends ExcelAccessor {
     public final int defaultSheet;
 
     public ExcelCoordinateAccessor(String resourceName) throws IOException {
-        this(resourceName, 1);
+        this(resourceName, 0);
     }
 
     public ExcelCoordinateAccessor(File file) throws IOException {
-        this(file, 1);
+        this(file, 0);
     }
 
     /**
      * @param resourceName
-     * @param defaultSheet sheet number starting with 1
+     * @param defaultSheet sheet number starting with 0
      * @throws IOException
      */
     public ExcelCoordinateAccessor(String resourceName, int defaultSheet) throws IOException {
         super(resourceName);
-        this.defaultSheet = defaultSheet-1;
+        this.defaultSheet = defaultSheet;
     }
 
     /**
      *
      * @param file
-     * @param defaultSheet sheet number starting with 1
+     * @param defaultSheet sheet number starting with 0
      * @throws IOException
      */
     public ExcelCoordinateAccessor(File file, int defaultSheet) throws IOException {
         super(file);
-        this.defaultSheet = defaultSheet-1;
+        this.defaultSheet = defaultSheet;
     }
 
 
@@ -98,25 +98,6 @@ public class ExcelCoordinateAccessor extends ExcelAccessor {
         String content = readCell(sheetNo, col-1, row-1, String.class);
         return ((content == null && word == null) || (content != null && content.contains(word)));
     }
-
-
-//    public ExcelCoordinate find(int sheetNo, String word) {
-//        final int EXCEL_MAX = 65536;
-//        // von oben link schraeg runter die Diagonalen bis einschl. Mitteldiagonale:
-//        for (int sum = 0; sum < EXCEL_MAX; sum++) {
-//            for (int i = 0; i <= sum; i++) {
-//                if (contains(word, sheetNo, i, sum-i)) return new ExcelCoordinate(i, sum-i);
-//            }
-//        }
-//        // Von der Mitteldiagonalen schraeg runter bis unten rechts:
-//        for (int sum = EXCEL_MAX; sum < 2*EXCEL_MAX; sum++) {
-//            for (int i = sum - EXCEL_MAX + 1; i < EXCEL_MAX; i++) {
-//                if (contains(word, sheetNo, i, sum-i)) return new ExcelCoordinate(i, sum-i);
-//            }
-//        }
-//        return null; // nothing found
-//    }
-
 
 
     /*---------------------------*\
