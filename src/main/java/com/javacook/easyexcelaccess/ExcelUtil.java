@@ -1,10 +1,15 @@
 package com.javacook.easyexcelaccess;
 
 /**
- * Created by vollmer on 07.09.16.
+ * Column text to number and reverse calculator
  */
 public class ExcelUtil {
 
+    /**
+     * Excel text label of the column ("A"..."Z", "AA"...)
+     * @param excelCol
+     * @return Corresponding column number starting with 1 (= "A")
+     */
     public static int calculateColNo(final String excelCol) {
         int result = 0;
         for (char c : excelCol.toUpperCase().toCharArray()) {
@@ -14,6 +19,12 @@ public class ExcelUtil {
         return result;
     }
 
+
+    /**
+     * Corresponding column number starting with 1 (= "A")
+     * @param excelCol
+     * @return Excel text label of the column ("A"..."Z", "AA"...)
+     */
     public static String calculateColLetters(final int excelCol) {
         String letters = "";
         int rest = excelCol - 1;
