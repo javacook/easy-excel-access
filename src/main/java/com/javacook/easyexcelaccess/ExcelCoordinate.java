@@ -20,7 +20,7 @@ public class ExcelCoordinate implements CoordinateInterface {
      * @param row numeric row coordinate starting with 1
      */
     public ExcelCoordinate(int col, int row) {
-        c = new Coordinate(col-1, row-1);
+        this(new Coordinate(col-1, row-1));
     }
 
     /**
@@ -30,6 +30,10 @@ public class ExcelCoordinate implements CoordinateInterface {
      */
     public ExcelCoordinate(String col, int row) {
         this(ExcelUtil.calculateColNo(col),row);
+    }
+
+    public ExcelCoordinate(CoordinateInterface coord) {
+        c = coord;
     }
 
     public int col() {
