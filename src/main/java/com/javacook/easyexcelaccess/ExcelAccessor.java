@@ -74,31 +74,40 @@ public class ExcelAccessor implements ExcelEasyAccess {
         if (isEmpty(sheetNo, x, y)) return null;
         try {
             HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
-            if (cell == null) return null;
-            switch (cell.getCellType()) {
-                case Cell.CELL_TYPE_STRING:
-                    return cell.getStringCellValue();
-                case Cell.CELL_TYPE_NUMERIC:
-                    final double numericCellValue = cell.getNumericCellValue();
-                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                        return HSSFDateUtil.getJavaDate(numericCellValue, false, DEFAULT_TIME_ZONE);
-                    }
-                    return convertNumericToObject(numericCellValue);
-                case Cell.CELL_TYPE_BOOLEAN:
-                    return cell.getBooleanCellValue();
-                case Cell.CELL_TYPE_BLANK:
-                    return null;
-                case Cell.CELL_TYPE_ERROR:
-                    throw new IllegalArgumentException("Cell is of type error.");
-                case Cell.CELL_TYPE_FORMULA:
-                    throw new IllegalArgumentException("Cell is of type formular.");
-                default:
-                    throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
-            }
+            return readCell(cell, cell.getCellType());
         } catch (Exception e) {
             throw new RuntimeException("Access to cell (sheet="+sheetNo+", x="+x+", y="+y+") failed", e);
         }
     }
+
+    Object readCell(HSSFCell cell, int cellType) {
+        if (cell == null) return null;
+        switch (cellType) {
+            case Cell.CELL_TYPE_STRING:
+                return cell.getStringCellValue();
+            case Cell.CELL_TYPE_NUMERIC:
+                final double numericCellValue = cell.getNumericCellValue();
+                if (HSSFDateUtil.isCellDateFormatted(cell)) {
+                    return HSSFDateUtil.getJavaDate(numericCellValue, false, DEFAULT_TIME_ZONE);
+                }
+                return convertNumericToObject(numericCellValue);
+            case Cell.CELL_TYPE_BOOLEAN:
+                return cell.getBooleanCellValue();
+            case Cell.CELL_TYPE_BLANK:
+                return null;
+            case Cell.CELL_TYPE_ERROR:
+                throw new IllegalArgumentException("Cell is of type error.");
+            case Cell.CELL_TYPE_FORMULA:
+                final int cachedFormulaResultType = cell.getCachedFormulaResultType();
+                if (cachedFormulaResultType == Cell.CELL_TYPE_FORMULA) {
+                    throw new IllegalStateException("Cached cell type is again of type formular.");
+                }
+                return readCell(cell, cell.getCachedFormulaResultType());
+            default:
+                throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
+        }
+    }
+
 
     public Object readCell(int sheet, CoordinateInterface coord) {
         return readCell(sheet, coord.x(), coord.y());
