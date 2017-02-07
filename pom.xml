@@ -6,7 +6,7 @@
 
     <groupId>com.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
@@ -55,7 +55,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
