@@ -47,7 +47,7 @@ public interface ExcelEasyAccess {
     /**
      * Yields the name of the sheet with index <code>sheet</code>
      * @param sheet index of the sheet.
-     * @return
+     * @return name of the sheet with index <code>sheet</code>
      */
     String sheetName(int sheet);
 

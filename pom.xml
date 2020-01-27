@@ -6,7 +6,7 @@
 
     <groupId>de.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.8</version>
+    <version>0.9</version>
 
     <scm>
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
@@ -25,6 +25,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
 
@@ -39,7 +41,7 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>3.14</version>
+            <version>4.1.1</version>
         </dependency>
 
         <dependency>

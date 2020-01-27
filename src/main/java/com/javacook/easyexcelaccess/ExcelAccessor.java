@@ -3,6 +3,8 @@ package com.javacook.easyexcelaccess;
 import com.javacook.coordinate.CoordinateInterface;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,11 +45,11 @@ public class ExcelAccessor implements ExcelEasyAccess {
     }
 
     /**
-     * Checks whether the excel cell is empty
+     * Checks whether the excel cell at coordinate (x,y) is empty
      * @param sheetNo Excel sheet number starting with 0
      * @param x
      * @param y
-     * @return
+     * @return true if the cell is empty
      */
     public boolean isEmpty(int sheetNo, int x, int y) {
         HSSFSheet sheet = workbook.getSheetAt(sheetNo);
@@ -56,7 +58,7 @@ public class ExcelAccessor implements ExcelEasyAccess {
         if (row == null) return true;
         HSSFCell cell = row.getCell(x);
         if (cell == null) return true;
-        return cell.getCellType() == Cell.CELL_TYPE_BLANK;
+        return cell.getCellType() == CellType.BLANK;
     }
 
     public boolean isRowEmpty(int sheetNo, int row) {
@@ -80,26 +82,26 @@ public class ExcelAccessor implements ExcelEasyAccess {
         }
     }
 
-    Object readCell(HSSFCell cell, int cellType) {
+    Object readCell(HSSFCell cell, CellType cellType) {
         if (cell == null) return null;
         switch (cellType) {
-            case Cell.CELL_TYPE_STRING:
+            case STRING:
                 return cell.getStringCellValue();
-            case Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 final double numericCellValue = cell.getNumericCellValue();
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                    return HSSFDateUtil.getJavaDate(numericCellValue, false, DEFAULT_TIME_ZONE);
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    return DateUtil.getJavaDate(numericCellValue, false, DEFAULT_TIME_ZONE);
                 }
                 return convertNumericToObject(numericCellValue);
-            case Cell.CELL_TYPE_BOOLEAN:
+            case BOOLEAN:
                 return cell.getBooleanCellValue();
-            case Cell.CELL_TYPE_BLANK:
+            case BLANK:
                 return null;
-            case Cell.CELL_TYPE_ERROR:
+            case ERROR:
                 throw new IllegalArgumentException("Cell is of type error.");
-            case Cell.CELL_TYPE_FORMULA:
-                final int cachedFormulaResultType = cell.getCachedFormulaResultType();
-                if (cachedFormulaResultType == Cell.CELL_TYPE_FORMULA) {
+            case FORMULA:
+                final CellType cachedFormulaResultType = cell.getCachedFormulaResultType();
+                if (cachedFormulaResultType == CellType.FORMULA) {
                     throw new IllegalStateException("Cached cell type is again of type formular.");
                 }
                 return readCell(cell, cell.getCachedFormulaResultType());
@@ -126,14 +128,14 @@ public class ExcelAccessor implements ExcelEasyAccess {
         else return cellValue;
     }
 
-
+    @SuppressWarnings("unchecked")
     public <T> T readCell(int sheetNo, int x, int y, Class<T> clazz) {
         if (isEmpty(sheetNo, x, y)) return null;
         try {
             HSSFCell cell = workbook.getSheetAt(sheetNo).getRow(y).getCell(x);
             if (cell == null) return null;
             switch (cell.getCellType()) {
-                case Cell.CELL_TYPE_STRING:
+                case STRING:
                     String str = cell.getStringCellValue();
                     if (clazz == String.class) return (T) str;
                     if (clazz == Integer.class) return (T) new Integer(str);
@@ -145,24 +147,24 @@ public class ExcelAccessor implements ExcelEasyAccess {
                         return (T) isoFormat.parse(str);
                     }
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-                case Cell.CELL_TYPE_NUMERIC:
+                case NUMERIC:
                     double dbl = cell.getNumericCellValue();
                     if (clazz == String.class) return (T) String.valueOf(dbl);
                     if (clazz == Integer.class) return (T) new Integer((int) dbl);
                     if (clazz == Long.class) return (T) new Long((long) dbl);
-                    if (clazz == Date.class) return (T) HSSFDateUtil.getJavaDate(dbl);
+                    if (clazz == Date.class) return (T) DateUtil.getJavaDate(dbl);
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-                case Cell.CELL_TYPE_BOOLEAN:
+                case BOOLEAN:
                     boolean bool = cell.getBooleanCellValue();
                     if (clazz == String.class) return (T) String.valueOf(bool);
                     if (clazz == Integer.class) return (T) (bool ? Integer.valueOf(1) : Integer.valueOf(0));
                     if (clazz == Long.class) return (T) (bool ? Long.valueOf(1) : Long.valueOf(0));
                     throw new IllegalArgumentException("Invalid class '" + clazz + "'");
-                case Cell.CELL_TYPE_BLANK:
+                case BLANK:
                     return null;
-                case Cell.CELL_TYPE_ERROR:
+                case ERROR:
                     throw new IllegalArgumentException("Cell is of type error.");
-                case Cell.CELL_TYPE_FORMULA:
+                case FORMULA:
                     throw new IllegalArgumentException("Cell is of type formular.");
                 default:
                     throw new IllegalStateException("Invalid cell type: " + cell.getCellType());
