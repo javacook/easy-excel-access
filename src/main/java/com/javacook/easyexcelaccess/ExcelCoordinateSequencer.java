@@ -13,7 +13,7 @@ import static com.javacook.easyexcelaccess.ExcelCoordinate.ROW_MAX;
  *     new ExcelCoordinateSequencer()
  *         .forCol('C')
  *         .fromRow(3).toRow(9)
- *         .forEach(coord -> System.out.println(excel.read(coord)));
+ *         .forEach(coord → System.out.println(excel.read(coord)));
  * </pre>
  */
 public class ExcelCoordinateSequencer {
