@@ -18,7 +18,7 @@
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
         <developerConnection>scm:git:git@github.com:javacook/easy-excel-access.git</developerConnection>
         <url>https://github.com/javacook/easy-excel-access</url>
-        <tag>HEAD</tag>
+        <tag>easy-excel-access-0.9</tag>
     </scm>
 
     <developers>
