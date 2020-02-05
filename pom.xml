@@ -4,7 +4,7 @@
 
     <groupId>de.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>0.9.1</version>
 
     <name>Easy Excel Access</name>
     <description>An API based on Apache POI to access Excel content very easily</description>
@@ -29,7 +29,7 @@
         <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
         <developerConnection>scm:git:git@github.com:javacook/easy-excel-access.git</developerConnection>
         <url>https://github.com/javacook/easy-excel-access</url>
-        <tag>HEAD</tag>
+        <tag>easy-excel-access-0.9.1</tag>
     </scm>
 
     <properties>
