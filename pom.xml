@@ -8,7 +8,7 @@
 
     <name>Easy Excel Access</name>
     <description>An API based on Apache POI to access Excel content very easily</description>
-
+    <url>https://github.com/javacook/easy-excel-access</url>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -16,14 +16,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <scm>
-        <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
-        <developerConnection>scm:git:git@github.com:javacook/easy-excel-access.git</developerConnection>
-        <url>https://github.com/javacook/easy-excel-access</url>
-        <tag>HEAD</tag>
-    </scm>
-
     <developers>
         <developer>
             <email>javacook@gmx.de</email>
@@ -32,6 +24,13 @@
             <id>javacook</id>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/javacook/easy-excel-access.git</connection>
+        <developerConnection>scm:git:git@github.com:javacook/easy-excel-access.git</developerConnection>
+        <url>https://github.com/javacook/easy-excel-access</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
