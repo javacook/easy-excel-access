@@ -4,7 +4,10 @@
 
     <groupId>de.javacook</groupId>
     <artifactId>easy-excel-access</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.9.1-SNAPSHOT</version>
+
+    <name>Easy Excel Access</name>
+    <description>An API based on Apache POI to access Excel content very easily</description>
 
     <licenses>
         <license>
